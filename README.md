@@ -12,5 +12,5 @@ Output file format: bed. Where the 5th column represents number of reads support
 
 Input files: bam. The files have to be indexed and put into bams/ repository.
 
-dedicated presentation:
+Dedicated presentation:
 https://www.researchgate.net/publication/344404962_De_novo_identification_of_polyadenylation_sites_from_RNA-seq_data
