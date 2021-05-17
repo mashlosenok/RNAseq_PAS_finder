@@ -1,7 +1,7 @@
 # RNAseq_PAS_finder
-RNA-seq based polyadenylation sites identification using adenine-rich softclips.
+RNA-seq based polyadenylation sites (PAS) identification using adenine-rich softclips.
 
-In output bed files Candidate polyadenylation sites are filtered 
+In output bed files candidate polyadenylation sites are filtered 
   -  by pooled entropy,
   -  for intersection with annotated repeats,
   -  for overlap with borders of genomic A- or T-runs,
