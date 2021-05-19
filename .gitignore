@@ -1,0 +1,4 @@
+*.ipynb*
+bams/
+references/AT_10_strict_positions_w1_sort.bed
+references/PAsignal_covered_reg_sort.bed
