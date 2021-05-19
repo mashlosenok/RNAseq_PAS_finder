@@ -2,8 +2,6 @@ import sys
 import os, fnmatch
 import pysam
 import collections
-#import pandas as pd
-import numpy as np
 
 if len(sys.argv) == 2:    
     filename = sys.argv[1]

@@ -1,4 +1,5 @@
-*.ipynb*
+sites/
 bams/
-references/AT_10_strict_positions_w1_sort.bed
-references/PAsignal_covered_reg_sort.bed
+references/*.bed
+!references/genes_v34l37_w1000_noOverlap.bed
+PAS_finder.sh

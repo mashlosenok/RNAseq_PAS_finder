@@ -3,9 +3,10 @@
 #script to generate positions of polyadenylation signal from fasta files of chromosomes. For filtering.
 
 OUT_DIR="./references"
+GENOME_DIR="/gss/mvlasenok/hg19_chr"
 
 # fasta files for chromosomes:
-for CHR_FILE_PATH in $(ls /hg19_chr/*fa); do
+for CHR_FILE_PATH in $(ls ${GENOME_DIR}/*fa); do
     CHR_NAME=$(basename $CHR_FILE_PATH .fa); 
     tail ${CHR_FILE_PATH} -n +2 | tr -d '\n' | grep -aob -i '[ATGC]ATAAA\|A[CGTA]TAAA\|AAT[TCGA]AA\|AATA[TCGA]A' > ${OUT_DIR}/${CHR_NAME}.start_pos+.tmp;
     tail ${CHR_FILE_PATH} -n +2 | tr -d '\n' | grep -aob -i 'T[TCGA]TATT\|TT[TCGA]ATT\|TTTA[TCGA]T\|TTTAT[TCGA]' > ${OUT_DIR}/${CHR_NAME}.start_pos-.tmp;
