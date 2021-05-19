@@ -11,8 +11,8 @@ In output bed files candidate polyadenylation sites are filtered:
 The output files also contain information about polyadenylation signal in upstrean 40bp region. 
 Output file format: the 5th column represents number of reads supporting the PAS, and the 7th column - the number of polyadenylation signals found up to 40 bp upstream of the PAS start. 
 
-Annotation: GENCODE v34lift37.
-
+Annotation: GENCODE v34lift37. 
+Requires: bedtools; pysam, collections.
 
 Dedicated presentation:
 https://www.researchgate.net/publication/344404962_De_novo_identification_of_polyadenylation_sites_from_RNA-seq_data
