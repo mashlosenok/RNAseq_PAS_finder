@@ -20,7 +20,7 @@ awk -v OFS="\t" '$7>0{p[$1]+=1;print $1,$2,$3,$1"_pas"p[$1],$5,$6,$7}' all_pas_e
 for ent_thr in 1 2 3; do 
     #filtering by Shannon entropy
     awk -v OFS="\t" -v e=$ent_thr '$7>=e' all_pas_ent_non0.bed | cut -f1-6 |bedtools intersect -s -c -sorted -a - -b ./references/PAsignal_covered_reg_sort.bed > pas_pooled_entropy_${ent_thr}_signal1Col.bed;
-    bedtools intersect -s -v -sorted -a pas_pooled_entropy_${ent_thr}_signal1Col.bed -b ./references/AT_10_positions_w1_sort.bed | bedtools intersect -v -sorted -a - -b ./references/repeat_tablehg19_sort.bed > pas_pooled_entropy_${ent_thr}_signal1Col_noRep_noA.bed;
+    bedtools intersect -s -v -sorted -a pas_pooled_entropy_${ent_thr}_signal1Col.bed -b ./references/AT_10_strict_positions_w1_sort.bed | bedtools intersect -v -sorted -a - -b ./references/repeat_tablehg19_sort.bed > pas_pooled_entropy_${ent_thr}_signal1Col_noRep_noA.bed;
     bedtools intersect -s -wa -sorted -a pas_pooled_entropy_${ent_thr}_signal1Col_noRep_noA.bed -b ./references/genes_v34l37_+-1000_noOverlap.bed > pas_pooled_entropy_${ent_thr}_signal1Col_noRep_noA_in_genes.bed;
 done;
 

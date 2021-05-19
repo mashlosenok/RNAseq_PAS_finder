@@ -10,5 +10,5 @@ for CHR_FILE_PATH in $(ls hg19_chr/*fa); do
     tail ${CHR_FILE_PATH} -n +2 | tr -d '\n' | grep -aob -P -i '(?<=A{10})[^A]' | cut -f1 -d: | awk -v chr=$CHR -v OFS="\t" '{print chr,$1-1,$1+1,".",0,"+"}' > ${OUT_DIR}/${CHR}_A.bed
     tail ${CHR_FILE_PATH} -n +2 | tr -d '\n' | grep -aob -P -i '[^T]T{10}' | cut -f1 -d: | awk -v chr=$CHR -v OFS="\t" '{print chr,$1-1,$1+1,".",0,"-"}' > ${OUT_DIR}/${CHR}_T.bed
 done
-cat chr*_[AT].bed | sort -k1,1 -k2,2n > PAsignal_pos_sort.bed
+cat chr*_[AT].bed | sort -k1,1 -k2,2n >  AT_10_strict_positions_w1_sort.bed;
 rm chr*_[AT].bed
