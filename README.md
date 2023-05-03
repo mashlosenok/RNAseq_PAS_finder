@@ -8,7 +8,8 @@ In output bed files candidate polyadenylation sites are filtered:
   -  for intersection with genomic A- or T-runs -- pas_entropy_{n}_signalCol_filt.bed
   -  additional file contains PAS overlapping with annotated genes -- pas_entropy_{n}_signalCol_filt_in_genes.bed
 
-The output files also contain information about polyadenylation signal in upstrean 40bp region. 
+The output files also contain information about polyadenylation signal in upstrean 40bp region.
+
 Output file format: the 5th column represents number of reads supporting the PAS, and the 7th column - the number of polyadenylation signals found up to 40 bp upstream of the PAS start. 
 
 Annotation: GENCODE v34lift37. 
