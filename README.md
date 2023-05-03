@@ -5,7 +5,7 @@ The input files have to be in bam format, indexed and stored in bams/ repository
 
 In output bed files candidate polyadenylation sites are filtered: 
   -  by pooled Shannon entropy (entropy >= n) -- pas_entropy_{n}_signalCol_filt.bed
-  -  for intersection with annotated repeat regions and overlap with borders of genomic A- or T-runs -- pas_entropy_{n}_signalCol_filt.bed
+  -  for intersection with genomic A- or T-runs -- pas_entropy_{n}_signalCol_filt.bed
   -  additional file contains PAS overlapping with annotated genes -- pas_entropy_{n}_signalCol_filt_in_genes.bed
 
 The output files also contain information about polyadenylation signal in upstrean 40bp region. 
