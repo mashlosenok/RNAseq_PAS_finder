@@ -1,6 +1,12 @@
 # RNAseq_PAS_finder
 RNA-seq based polyadenylation sites (PAS) identification using adenine-rich softclips.
 
+## Input
+By default *RNAseq_PAS_finder* identifies PAS from all .bam files stored in `bams/` direcory. The input files have to be indexed.
+
+## Output
+List of polyadenylation clusters (PASC) with number of supporting polyA reads.
+
 ## Setting up
 
 Clone this repository to your local system.
@@ -17,10 +23,9 @@ docker run -v path_to_folder/RNAseq_PAS_finder:/home/RNAseq_PAS_finder -it my_im
 You should be in `/home/RNAseq_PAS_finder` directory in the container. 
 
 ## Test run
+`bams/` folder contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation sites from all `.bam` files in `bams/` folder.
 
-Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation sites from all `.bam` files in `bams/` folder.
 
-The input files have to be in bam format, indexed and stored in bams/ repository.
 
 In output bed files candidate polyadenylation sites are filtered: 
   -  by pooled Shannon entropy (entropy >= n) -- pas_entropy_{n}_signalCol_filt.bed
