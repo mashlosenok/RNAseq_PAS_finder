@@ -1,5 +1,5 @@
 sites/
-bams/
-references/*.bed
-!references/genes_v34l37_w1000_noOverlap.bed
-PAS_finder.sh
+pAread_bams/
+pasc_entropy_*.bed
+pas_entropy_*.bed
+all_pas_*_entropy.bed

@@ -1,26 +1,45 @@
 SHELL:=/bin/bash
 vpath %.bam bams
 vpath %.tsv sites
+vpath %.bai bams
+ENT?=1
+tsvs=$(shell ls bams/|grep "bam$$" |sed 's/bam/tsv/')
 
-all: pas_entropy_1_signalCol.bed pas_entropy_2_signalCol.bed pas_entropy_3_signalCol.bed
+all: pasc_entropy_$(ENT).bed 
 
-pas_entropy_1_signalCol.bed pas_entropy_2_signalCol.bed pas_entropy_3_signalCol.bed: all_pas_ent_non0.bed references/PAsignal_covered_reg_sort.bed references/AT_10_strict_positions_w1_sort.bed references/repeat_tablehg19_sort.bed references/genes_v34l37_w1000_noOverlap.bed
-	./filter_pas.sh $@;
+pasc_entropy_$(ENT).bed: pas_entropy_$(ENT).bed
+	@echo "entropy threshold " $(ENT); \
+	if [ -s $^ ]; then \
+	echo "merging" $^; \
+       	bedtools merge -d 11 -s -c 4,5,6,7 -o distinct,sum,distinct,sum -i pas_entropy_$(ENT).bed | \
+	sort -k1,1 -k2,2n | \
+	awk -v OFS="\t" '{print $$1,$$2,$$3,$$4,$$5,$$6,($$7>0)?"+signal":"-signal"}' > pasc_entropy_$(ENT).bed; \
+	else \
+	echo "Error: no PAS with entropy >=" $(ENT); \
+	fi
 
-all_pas_ent_non0.bed: sites $(shell ls bams/|grep bai |sed 's/bam.bai/tsv/')
-	echo $^;
-	./all_pas_pooled_ent.sh
+pas_entropy_$(ENT).bed: all_pas_non0_entropy.bed references/PAsignal_covered_reg.bed references/AT_10_strict_positions.bed 
+	./filter_pas.sh $(ENT)
 
-%.tsv: %.bam sites
-	module load ScriptLang/python/2.7u3_2019i;
-	echo bams/$(shell basename $@ .tsv).bam;     
-	python2 polyA_overhangs_collection_maxM20.py bams/$(shell basename $@ .tsv).bam  
+all_pas_non0_entropy.bed: sites $(tsvs)
+	./pooled_pas_compute_entropy.sh
+
+$(tsvs): %.tsv: %.bam %.bam.bai sites pAread_bams
+	python polyA_overhangs_read_quality_filter_NH1.py bams/$(shell basename $@ .tsv).bam  
 
 sites:
 	mkdir sites
+
+pAread_bams:
+	mkdir pAread_bams
+
+#references/PAsignal_covered_reg.bed:
+#	wget -qO references/PAsignal_covered_reg.bed.gz "https://zenodo.org/record/7799648/files/PAS_finder/PAsignal_covered_reg.bed.gz?download=1"; gunzip references/PAsignal_covered_reg.bed.gz; 
+#	OR ./references/PAsignal.sh, but then references/genome/ has to contain faste files with chr sequences. 
     
-references/PAsignal_covered_reg_sort.bed:
-	./references/PAsignal.sh
-    
-references/AT_10_strict_positions_w1_sort.bed:
-	./references/AT10_positions_w1_sort.sh
+#references/AT_10_strict_positions.bed:
+#	wget -qO references/AT_10_strict_positions.bed.gz "https://zenodo.org/record/7799648/files/PAS_finder/AT_10_strict_positions.bed.gz?download=1"; gunzip references/AT_10_strict_positions.bed.gz;
+#	OR ./references/AT10_positions.sh, but then references/genome/ has to contain faste files with chr sequences. 
+
+#references/genome: 
+#	mkdir references/genome; rsync -azP rsync://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/ references/genome/; gunzip references/genome/*.fa.gz
