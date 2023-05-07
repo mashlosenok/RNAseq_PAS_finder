@@ -18,7 +18,7 @@ You should be in `/home/RNAseq_PAS_finder` directory in the container.
 
 ## Test run
 
-Run `make` in `/home/RNAseq_PAS_finder` directory to get `.bed` file with polyadenylation sites from all `.bam` files in `bams/` folder.
+Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation sites from all `.bam` files in `bams/` folder.
 
 The input files have to be in bam format, indexed and stored in bams/ repository.
 
