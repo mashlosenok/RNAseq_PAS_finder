@@ -1,6 +1,23 @@
 # RNAseq_PAS_finder
 RNA-seq based polyadenylation sites (PAS) identification using adenine-rich softclips.
 
+## Usage
+
+Clone this repository to your local system.
+```
+git clone https://github.com/mashlosenok/RNAseq_PAS_finder.git
+cd RNAseq_PAS_finder
+```
+Install and start [Docker](https://docs.docker.com/get-docker/) to run a container. 
+Build a local image from `Dockerfile` and run an interactive container with mounted `RNAseq_PAS_finder` directory.
+```
+docker build --tag my_image_name .
+docker run -v path_to_folder/RNAseq_PAS_finder:/home/RNAseq_PAS_finder -it my_image_name /bin/bash
+```
+Execute
+
+
+
 The input files have to be in bam format, indexed and stored in bams/ repository.
 
 In output bed files candidate polyadenylation sites are filtered: 
