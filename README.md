@@ -54,6 +54,7 @@ Both `sites_output_dirname` and `pAread_bams` folders are created in the current
 Concatenates all .tsv files from `./sites/` directory, for each candidate PAS computes total polyA read support and total entropy of overhang lengths distribution. 
 
 Output:
+
 `all_pas_with_entropy.bed` and `all_pas_non0_entropy.bed` that contains only PAS with nonzero entropy. Useful if one wants to examine all PAS and apply custom filtering.
 
 ### Step 3. Filter PAS by Shannon entropy and cluster.
@@ -65,6 +66,7 @@ Output:
 `./filter_pas.sh [ent_thr]` filters PAS from `all_pas_non0_entropy.bed` by `ent_thr` entropy threshold, deletes PAS that are in genomic A/T runs and looks for canonical polyadenylation signal upstream of each PAS, merges PAS that are within 10bp into PASC. 
 
 Output: 
+
 `pas_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PAS, polyA read support (5th column) and number of polyadenylation signals in 40bp upstream region (7th column).  
 `pasc_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PASC, total polyA read support of PAS in the cluster (5th column), and `+/-signal` indication of polyadenylation signals in upstream region (7th column).
 `ent_thr` can be integer or float. 
