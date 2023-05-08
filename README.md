@@ -1,5 +1,5 @@
 # RNAseq_PAS_finder
-RNA-seq based polyadenylation sites (PAS) identification using adenine-rich softclips.
+Polyadenylation sites (PAS) identification from short RNA-seq reads with non-templated adenines (polyA reads).
 
 ## Input
 By default *RNAseq_PAS_finder* identifies PAS from all .bam files stored in `bams/` direcory. The input files have to be indexed.
@@ -22,11 +22,46 @@ docker run -v path_to_folder/RNAseq_PAS_finder:/home/RNAseq_PAS_finder -it my_im
 ```
 You should be in `/home/RNAseq_PAS_finder` directory in the container. 
 
+## Pipeline
+
+### Step 1. PAS for each sample
+
+Identify polyA reads and PAS in each bam file:
+```
+for f in bams/*bam
+do python polyA_overhangs_read_quality_filter_NH1.py f 
+done
+```
+PolyA reads are reads containing a soft clipped region of at least six nucleotides that consists of 80% or more adenines. The script selects uniquely mapped polyA reads with good sequencing quality (average quality >12).
+
+#### Usage:
+`python polyA_overhangs_read_quality_filter_NH1.py bam_name.bam [sites_output_dirname]` 
+
+Arguments
+- bam_name.bam - indexed bamfile (global or local path)
+- sites_output_dirname - name of the directory, where output .tsv files with PAS positions will be stored (optional, default value "sites").
+
+Output
+- sites_output_dirname/bam_name.tsv - table with candidate PAS, columns: chr, position, strand, overhang length in nt, number of supporting polyA reads. First row is the header.
+- pAread_bams/bam_name_pAreads.bam - bam file with polyA reads. Bam header is copied from the input `bam_name.bam`. 
+Both `sites_output_dirname` and `pAread_bams` folders are created in the current working directory. 
+
+### Step 2. Pool PAS and filter by Shannon entropy
+
+```
+./pooled_pas_compute_entropy.sh
+./filter_pas.sh 1
+```
+`./pooled_pas_compute_entropy.sh` concatenates all .tsv files from `./sites/` directory, for each candidate PAS computes total polyA read support and total entropy of overhang lengths distribution.
+
+
+
 ## Test run
 `bams/` folder contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation sites from all `.bam` files in `bams/` folder.
 
 
 
+_____
 In output bed files candidate polyadenylation sites are filtered: 
   -  by pooled Shannon entropy (entropy >= n) -- pas_entropy_{n}_signalCol_filt.bed
   -  for intersection with genomic A- or T-runs -- pas_entropy_{n}_signalCol_filt.bed
@@ -36,8 +71,9 @@ The output files also contain information about polyadenylation signal in upstre
 
 Output file format: the 5th column represents number of reads supporting the PAS, and the 7th column - the number of polyadenylation signals found up to 40 bp upstream of the PAS start. 
 
-Annotation: GENCODE v34lift37. 
-Requires: bedtools; pysam, collections.
+## Requirements 
+- bedtools
+- python packaes: numpy, pysam.
 
 Dedicated presentation:
 https://www.researchgate.net/publication/344404962_De_novo_identification_of_polyadenylation_sites_from_RNA-seq_data
