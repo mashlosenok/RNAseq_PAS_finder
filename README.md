@@ -93,6 +93,7 @@ Both output files are created in the current working directory.
 
 ## Test run
 `bams/` folder in this GitHub directory contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation clusters from the test `.bam` files in `bams/` folder. 
+
 *NB: `AT_10_strict_positions.bed` and `PAsignal_covered_reg.bed` that will be downloaded with the directory cover only chr22. They are sufficient for the test run. To create reference files for the whole genome refer to [Step3](https://github.com/mashlosenok/RNAseq_PAS_finder/edit/main/README.md#step-3-prepare-files-for-pas-filtering).*
 
 ## Requirements 
