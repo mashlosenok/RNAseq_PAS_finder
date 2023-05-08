@@ -48,25 +48,39 @@ Output
 Both `sites_output_dirname` and `pAread_bams` folders are created in the current working directory. 
 
 ### Step 2. Pool PAS
-
 ```
 ./pooled_pas_compute_entropy.sh
 ```
-Concatenates all .tsv files from `./sites/` directory, for each candidate PAS computes total polyA read support and total entropy of overhang lengths distribution. 
+`./pooled_pas_compute_entropy.sh [/path_to_dir_with_tsvs]`  concatenates all .tsv files from `./path_to_dir_with_tsvs` directory, for each candidate PAS computes total polyA read support and total entropy of overhang lengths distribution. The script takes path to directory with .tsv files as an argument, default value is `./sites`.
 
 Output:
 
 `all_pas_with_entropy.bed` - list of all candidate PAS with total polyA read support (5th column) and entropy (7th column). 
 
 `all_pas_non0_entropy.bed` - same as `all_pas_with_entropy.bed`, but limited to PAS with nonzero entropy. Useful if one wants to examine all PAS and apply custom filtering.
+Both files are created in the current working directory. 
 
-### Step 3. Filter PAS by Shannon entropy and cluster.
+### Step 3. Prepare files for PAS filtering.
+To exclude PAS in genomic A/T runs and to locate polyadenylation signals, you will need the assembly of the genome of interest in fasta format. 
+For example, we used human GRCh37 (hg19) which can be downaloaded from UCSC servers with `rsync`. 
+```
+rsync -azP rsync://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/ /path_to_genome_dir/genome/; 
+gunzip /path_to_genome_dir/genome/chr*.fa.gz
+```
+*NB: the container does not have rsync, so to download assembly from the container you'll need to install it with `apt install rsync`.*  
 
+To generate files with genomic A/T runs and regions dowstream of polyadenylation signals from the genome sequence, use `AT10_positions.sh` and `PAsignal.sh` scripts from `/references` folder. Both scripts accept path to the directory with `chr*.fa` files as argument.
+```
+./references/AT10_positions.sh /path_to_genome_dir/genome/
+./references/PAsignal.sh /path_to_genome_dir/genome/
+```
+The scripts create `AT_10_strict_positions.bed` and `PAsignal_covered_reg.bed` files in the current working directory. `AT_10_strict_positions.bed` is a bed file with borders of many (>10nt) consequent A(T) nucleotides in the genome. `PAsignal_covered_reg.bed` is a bed file with genomic position of regions dowstream of known polyadenylation signals. 
+
+### Step 4. Filter and cluster PAS.
 ```
 ./filter_pas.sh 1
 ```
-
-`./filter_pas.sh [ent_thr]` filters PAS from `all_pas_non0_entropy.bed` by `ent_thr` entropy threshold, deletes PAS that are in genomic A/T runs and looks for canonical polyadenylation signal upstream of each PAS, merges PAS that are within 10bp into PASC. 
+`./filter_pas.sh [ent_thr]` filters PAS from `all_pas_non0_entropy.bed` by `ent_thr` entropy threshold, deletes PAS that are in genomic A/T runs (in `./references/AT_10_strict_positions.bed`) and looks for canonical polyadenylation signal upstream of each PAS (via `./references/PAsignal_covered_reg.bed`), then the PAS are clustered into PASCs. All paths are local.
 
 Output: 
 
@@ -74,12 +88,12 @@ Output:
 `pasc_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PASC, total polyA read support of PAS in the cluster (5th column), and `+/-signal` indication of polyadenylation signals in upstream region (7th column).
 `ent_thr` can be integer or float. 
 
-The script requires `./references/AT_10_strict_positions.bed` and `./references/PAsignal_covered_reg.bed` files. 
-The former contains coordinates of genomic A/T runs and can be generated from fasta files with genome sequences via `AT10_positions.sh` script. 
-`./references/PAsignal_covered_reg.bed` contains genomic locations of polyadenylation signals and regions dowstream of them and can be generated from fasta files with genome sequences via `PAsignal.sh` script.  
+Both output files are created in the current working directory.
+
 
 ## Test run
-`bams/` folder contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation clusters from all `.bam` files in `bams/` folder.
+`bams/` folder in this GitHub directory contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation clusters from the test `.bam` files in `bams/` folder. 
+*NB: `AT_10_strict_positions.bed` and `PAsignal_covered_reg.bed` that will be downloaded with the directory cover only chr22. They are sufficient for the test run. To create reference files for the whole genome refer to [Step3](https://github.com/mashlosenok/RNAseq_PAS_finder/edit/main/README.md#step-3-prepare-files-for-pas-filtering).*
 
 ## Requirements 
 - bedtools >=2.29
