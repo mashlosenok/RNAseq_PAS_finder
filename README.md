@@ -19,7 +19,7 @@ You should be in `/home/RNAseq_PAS_finder` directory in the container.
 ## Pipeline
 
 ### Input
-By default *RNAseq_PAS_finder* identifies PAS from all .bam files stored in `bams/` direcory. The input files have to be indexed.
+By default the pipeline identifies PAS from all .bam files stored in `bams/` direcory. The input files have to be indexed.
 
 ### Final output
 List of polyadenylation clusters (PASC) with number of supporting polyA reads.
@@ -44,6 +44,7 @@ Arguments
 Output
 - sites_output_dirname/bam_name.tsv - table with candidate PAS, columns: chr, position, strand, overhang length in nt, number of supporting polyA reads. First row is the header.
 - pAread_bams/bam_name_pAreads.bam - bam file with polyA reads. Bam header is copied from the input `bam_name.bam`. 
+
 Both `sites_output_dirname` and `pAread_bams` folders are created in the current working directory. 
 
 ### Step 2. Pool PAS
@@ -55,7 +56,9 @@ Concatenates all .tsv files from `./sites/` directory, for each candidate PAS co
 
 Output:
 
-`all_pas_with_entropy.bed` and `all_pas_non0_entropy.bed` that contains only PAS with nonzero entropy. Useful if one wants to examine all PAS and apply custom filtering.
+`all_pas_with_entropy.bed` - list of all candidate PAS with total polyA read support (5th column) and entropy (7th column). 
+
+`all_pas_non0_entropy.bed` - same as `all_pas_with_entropy.bed`, but limited to PAS with nonzero entropy. Useful if one wants to examine all PAS and apply custom filtering.
 
 ### Step 3. Filter PAS by Shannon entropy and cluster.
 
