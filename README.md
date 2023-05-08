@@ -71,7 +71,9 @@ Output:
 `pasc_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PASC, total polyA read support of PAS in the cluster (5th column), and `+/-signal` indication of polyadenylation signals in upstream region (7th column).
 `ent_thr` can be integer or float. 
 
-The script requires `./references/AT_10_strict_positions.bed` and `./references/PAsignal_covered_reg.bed` files. The former contains coordinates of genomic A/T runs and can be generated from fasta files with genome sequences via `AT10_positions.sh` script. `./references/PAsignal_covered_reg.bed` contains genomic locations of polyadenylation signals and regions dowstream of them.  
+The script requires `./references/AT_10_strict_positions.bed` and `./references/PAsignal_covered_reg.bed` files. 
+The former contains coordinates of genomic A/T runs and can be generated from fasta files with genome sequences via `AT10_positions.sh` script. 
+`./references/PAsignal_covered_reg.bed` contains genomic locations of polyadenylation signals and regions dowstream of them and can be generated from fasta files with genome sequences via `PAsignal.sh` script.  
 
 ## Test run
 `bams/` folder contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation clusters from all `.bam` files in `bams/` folder.
