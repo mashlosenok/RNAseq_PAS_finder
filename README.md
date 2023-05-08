@@ -83,6 +83,4 @@ The script requires `./references/AT_10_strict_positions.bed` and `./references/
   - pysam >=0.15.
 
 ## Publication
- Transcriptome sequencing suggests that pre-mRNA splicing counteracts widespread intronic cleavage and polyadenylation
-Mariia Vlasenok, Sergey Margasyuk, Dmitri D. Pervouchine
-bioRxiv 2022.05.27.493724; doi: https://doi.org/10.1101/2022.05.27.493724 
+Mariia Vlasenok, Sergey Margasyuk, Dmitri D. Pervouchine. Transcriptome sequencing suggests that pre-mRNA splicing counteracts widespread intronic cleavage and polyadenylation. bioRxiv 2022.05.27.493724; doi: https://doi.org/10.1101/2022.05.27.493724 
