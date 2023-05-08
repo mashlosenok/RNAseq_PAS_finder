@@ -65,28 +65,22 @@ Output:
 `./filter_pas.sh [ent_thr]` filters PAS from `all_pas_non0_entropy.bed` by `ent_thr` entropy threshold, deletes PAS that are in genomic A/T runs and looks for canonical polyadenylation signal upstream of each PAS, merges PAS that are within 10bp into PASC. 
 
 Output: 
-`pas_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PAS, polyA read support (4th column) and number of polyadenylation signals in 40bp upstream region (7th column).  
-`pasc_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PASC, polyA read support (4th column) and precence of polyadenylation signals in 40bp upstream region (7th column).
-`ent_thr` can be integer or float.        
+`pas_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PAS, polyA read support (5th column) and number of polyadenylation signals in 40bp upstream region (7th column).  
+`pasc_entropy_[ent_thr].bed` - bed file with gemonic coordinates of each PASC, total polyA read support of PAS in the cluster (5th column), and `+/-signal` indication of polyadenylation signals in upstream region (7th column).
+`ent_thr` can be integer or float. 
+
+The script requires `./references/AT_10_strict_positions.bed` and `./references/PAsignal_covered_reg.bed` files. The former contains coordinates of genomic A/T runs and can be generated from fasta files with genome sequences via `AT10_positions.sh` script. `./references/PAsignal_covered_reg.bed` contains genomic locations of polyadenylation signals and regions dowstream of them.  
 
 ## Test run
 `bams/` folder contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation sites from all `.bam` files in `bams/` folder.
 
 
-
-_____
-In output bed files candidate polyadenylation sites are filtered: 
-  -  by pooled Shannon entropy (entropy >= n) -- pas_entropy_{n}_signalCol_filt.bed
-  -  for intersection with genomic A- or T-runs -- pas_entropy_{n}_signalCol_filt.bed
-  -  additional file contains PAS overlapping with annotated genes -- pas_entropy_{n}_signalCol_filt_in_genes.bed
-
-The output files also contain information about polyadenylation signal in upstrean 40bp region.
-
-Output file format: the 5th column represents number of reads supporting the PAS, and the 7th column - the number of polyadenylation signals found up to 40 bp upstream of the PAS start. 
-
 ## Requirements 
-- bedtools
-- python packaes: numpy, pysam.
+- bedtools >=2.29
+- python 3.7
+  - numpy, pysam >=0.15.
 
-Dedicated presentation:
-https://www.researchgate.net/publication/344404962_De_novo_identification_of_polyadenylation_sites_from_RNA-seq_data
+## Publication
+ Transcriptome sequencing suggests that pre-mRNA splicing counteracts widespread intronic cleavage and polyadenylation
+Mariia Vlasenok, Sergey Margasyuk, Dmitri D. Pervouchine
+bioRxiv 2022.05.27.493724; doi: [https://doi.org/10.1101/2022.05.27.493724] (https://doi.org/10.1101/2022.05.27.493724)
