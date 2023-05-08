@@ -1,12 +1,6 @@
 # RNAseq_PAS_finder
 Polyadenylation sites (PAS) identification from short RNA-seq reads with non-templated adenines (polyA reads).
 
-## Input
-By default *RNAseq_PAS_finder* identifies PAS from all .bam files stored in `bams/` direcory. The input files have to be indexed.
-
-## Output
-List of polyadenylation clusters (PASC) with number of supporting polyA reads.
-
 ## Setting up
 
 Clone this repository to your local system.
@@ -23,6 +17,12 @@ docker run -v path_to_folder/RNAseq_PAS_finder:/home/RNAseq_PAS_finder -it my_im
 You should be in `/home/RNAseq_PAS_finder` directory in the container. 
 
 ## Pipeline
+
+### Input
+By default *RNAseq_PAS_finder* identifies PAS from all .bam files stored in `bams/` direcory. The input files have to be indexed.
+
+### Final output
+List of polyadenylation clusters (PASC) with number of supporting polyA reads.
 
 ### Step 1. PAS for each sample
 
@@ -74,13 +74,13 @@ The script requires `./references/AT_10_strict_positions.bed` and `./references/
 ## Test run
 `bams/` folder contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation sites from all `.bam` files in `bams/` folder.
 
-
 ## Requirements 
 - bedtools >=2.29
 - python 3.7
-  - numpy, pysam >=0.15.
+  - numpy 
+  - pysam >=0.15.
 
 ## Publication
  Transcriptome sequencing suggests that pre-mRNA splicing counteracts widespread intronic cleavage and polyadenylation
 Mariia Vlasenok, Sergey Margasyuk, Dmitri D. Pervouchine
-bioRxiv 2022.05.27.493724; doi: [https://doi.org/10.1101/2022.05.27.493724] (https://doi.org/10.1101/2022.05.27.493724)
+bioRxiv 2022.05.27.493724; doi: https://doi.org/10.1101/2022.05.27.493724 
