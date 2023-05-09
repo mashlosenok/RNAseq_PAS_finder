@@ -1,5 +1,7 @@
 sites/
 pAread_bams/
+references/genome/
 pasc_entropy_*.bed
 pas_entropy_*.bed
-all_pas_*_entropy.bed
+!pasc_entropy_1_test.bed
+all_pas_with_entropy.bed

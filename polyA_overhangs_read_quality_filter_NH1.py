@@ -47,4 +47,10 @@ def polyA_overhangs(filename, out_dir):
             else:
                 d.update({key:np.array([counts[line]])})
 
+if not os.path.exists(out_dir):
+	os.makedirs(out_dir)
+	
+if not os.path.exists('pAread_bams'):
+	os.makedirs('pAread_bams')	
+
 polyA_overhangs(filename, out_dir)
