@@ -13,6 +13,7 @@ Build a local image from `Dockerfile` and run an interactive container with moun
 ```
 docker build --tag my_image_name .
 docker run -v path_to_folder/RNAseq_PAS_finder:/home/RNAseq_PAS_finder -it my_image_name /bin/bash
+cd RNAseq_PAS_finder
 ```
 You should be in `/home/RNAseq_PAS_finder` directory in the container. 
 
