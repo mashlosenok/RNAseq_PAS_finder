@@ -101,7 +101,7 @@ Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file 
 ## Requirements 
 - bedtools >=2.29
 - python 3.7
-  - numpy 
+  - numpy >=1.21
   - pysam >=0.15.
 
 ## Publication
