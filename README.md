@@ -92,9 +92,11 @@ Both output files are created in the current working directory.
 
 
 ## Test run
-`bams/` folder in this GitHub directory contains three small indexed bam files. Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with polyadenylation clusters from these test `.bam` files. 
+Run `make` in `RNAseq_PAS_finder` directory in the container to get `.bed` file with PASC from test `.bam` files in `bams/` folder.
 
-*NB: `AT_10_strict_positions.bed` and `PAsignal_covered_reg.bed` that will be downloaded with the directory cover only chr22. They are sufficient for the test run. To create reference files for the whole genome refer to [Step3](https://github.com/mashlosenok/RNAseq_PAS_finder/edit/main/README.md#step-3-prepare-files-for-pas-filtering).*
+`make` creates `pasc_entropy_1.bed` and `pas_entropy_1.bed` files, as well as the output of the intermediate steps: for each bam `bam_name.tsv` in `sites/` directory, `bam_name_pAreads.bam` in `pAread_bams/` , and the pooled `all_pas_with_entropy.bed`. There is `pasc_entropy_1_test.bed` to compare with test run output `pasc_entropy_1.bed`, if the files are identical `make` prints `successful test run for entropy threshold=1`. 
+
+*NB: `AT_10_strict_positions.bed` and `PAsignal_covered_reg.bed` in this GitHub directory cover only chr22. They are only sufficient for the test run. To create reference files for the whole genome refer to [Step3](https://github.com/mashlosenok/RNAseq_PAS_finder/edit/main/README.md#step-3-prepare-files-for-pas-filtering).*
 
 ## Requirements 
 - bedtools >=2.29
