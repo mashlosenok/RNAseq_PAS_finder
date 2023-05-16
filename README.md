@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/368336196.svg)](https://zenodo.org/badge/latestdoi/368336196)
+
 # RNAseq_PAS_finder
 Polyadenylation sites (PAS) identification from short RNA-seq reads with non-templated adenines (polyA reads).
 
